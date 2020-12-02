@@ -1,3 +1,61 @@
 * {
     box-sizing: border-box;
 }
+
+body {
+    background-color: rgb(100, 149, 237);
+    font-size: 16px;
+    margin: auto;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 1150px;
+}
+
+h1, h2, h3{
+    line-height: 1rem;
+    text-align: center;
+}
+
+.cardsbox {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 1rem 1rem 0;
+}
+
+.cards {
+    background-color: rgba(135, 206, 250, .6);
+    border: .2rem solid rgb(255, 255, 0);
+    display: flex;
+    margin: 1rem;
+    height: 200px;
+    width: 120px;
+    transition: .3s;
+}
+
+.cards:hover {
+    background-color: rgba(135, 206, 250, 1);
+    cursor: pointer;
+}
+
+.cards span {
+    font-size: 3rem;
+    margin: auto;
+}
+
+
+
+
+
+
+
+
+
