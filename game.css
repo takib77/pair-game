@@ -32,17 +32,17 @@ h1, h2, h3{
 }
 
 .cards {
-    background-color: rgba(135, 206, 250, .6);
+    background-image: linear-gradient(rgba(135,206,250,.5), rgba(115,226,230,.5)), url(./backpicture.jpg);
     border: .2rem solid rgb(255, 255, 0);
     display: flex;
     margin: 1rem;
     height: 200px;
-    width: 120px;
+    width: 135px;
     transition: .3s;
 }
 
 .cards:hover {
-    background-color: rgba(135, 206, 250, 1);
+    background-image: linear-gradient(rgb(135,206,250), rgb(115,226,230));
     cursor: pointer;
 }
 
