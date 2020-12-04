@@ -8,9 +8,9 @@
 
 // 1. Kártya esemény
 
-const addListener = () => {
+const stopperEventListener = () => {
     document.querySelectorAll('.cards').forEach(item => {
-        item.addEventListener('click', handleClick)
+        item.addEventListener('click', handleStopperClick)
     })
 };
 
@@ -43,23 +43,23 @@ const zeroForTime = (number) => {
 
 // 2. A stopper elindítása
 
-const handleClick = (event) => {
+const handleStopperClick = (event) => {
     timer();
-    removeListener();
+    removeStopperListener();
 }
 
 // 2A Kártya kattintós esemény eltávolítása
 
-const removeListener = () => {
+const removeStopperListener = () => {
     document.querySelectorAll('.cards').forEach(item => {
-        item.removeEventListener('click', handleClick)
+        item.removeEventListener('click', handleStopperClick)
     })
 };
 
 
 // 3. Próba - elemre kattintási esemény
 
-const timerEventStopper = () => {
+const stopperEventStopper = () => {
     document.querySelector('.c').addEventListener('click', stopperClick)
 };
 
@@ -78,13 +78,21 @@ const stopperClick = (event) => {
 
 
 
-// Kártyák random rendezése
+// A. Kártyák kiválasztása
+// B. Tömbelemek összekeverése
+// C. Random elemek beállítása a kártyákra
+
+
+// A. Kártyák kiválasztása és tömbbe tétele
 
 let spanArray = [];
 const cardsSpan = document.querySelectorAll('.cards span');
 cardsSpan.forEach(item => {
     spanArray.push(item.textContent);
 });
+
+
+// B. Jelek összekeverése - arr = spanArray
 
 const randomizer = (arr) => {
     let i, j, k;
@@ -94,34 +102,64 @@ const randomizer = (arr) => {
         arr[i] = arr[j];
         arr[j] = k;
     }
-    cardsSpan.forEach(item => item.textContent = spanArray);
+    return arr;
 };
 
-// 1. Selector -> Nodelist
-// 2. Nodelist elemeinek dataértéke -> Új tömb
-// 3. Tömb elemek keverése
-// 4. Tömb elemek -> Nodelist dataérté
 
-//const cardsItem = () => {
-//    for (let i = 0; i < array.length; i++) {
-//        
-//    }
+// C. A megkevert jelek kártyára tétele - arr = spanArray
+
+const cardsItem = (arr) => {
+    for (let i = 0; i < arr.length; i += 1) {
+        cardsSpan[i].textContent = arr[i];
+    }
+};
+
+
+
+// 1. Kártyára kattintásra...
+// 2. ...a kártya felfordul és megjelenik a jele
+
+
+// 1. Kártya kattintás esemény
+
+const cardsEventListener = () => {
+    document.querySelectorAll('.cards').forEach(item => {
+        item.addEventListener('click', handleCardsClick)
+    })
+};
+
+
+// 2. A kártya fordítás és a jel megmutatásának indítása
+
+const handleCardsClick = (event) => {
+    event.target.style.transform='rotateY(180deg)';
+    event.target.style.backgroundImage='linear-gradient(rgb(135,206,250), rgb(115,226,230))';
+    event.target.style.padding='1px';
+
+
+    cardsEventListener();
+//    showSpan();
+}
+
+
+// 3. A kártya fordítása
+
+//const rotateCard = () => {
+//    document.querySelectorAll('.cards').forEach(item => {
+//        item.style.transform='rotateY(180deg)'
+//    })
 //}
 //
-//cardsSpan.forEach(item => item.textContent = spanArray);
-
-
-//let sp = spanArray.forEach(item => item+1);
 
 
 
 
 
+// ---------------------------------------------
 
-
-
-addListener();
-timerEventStopper();
+stopperEventListener();
+stopperEventStopper();
+cardsEventListener();
 
 const endGame = () => {
     removeListener();

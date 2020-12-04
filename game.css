@@ -41,12 +41,12 @@ h1, h2, h3{
     transition: 1s;
 }
 
-.cards:hover {
+/*.cards:hover {
     background-image: linear-gradient(rgb(135,206,250), rgb(115,226,230));
     cursor: pointer;
     transform: rotateY(180deg);
 }
-
+*/
 .cards span {
     font-size: 3rem;
     margin: auto;
