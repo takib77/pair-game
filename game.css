@@ -38,22 +38,27 @@ h1, h2, h3{
     margin: 1rem;
     height: 200px;
     width: 135px;
-    transition: .3s;
+    transition: 1s;
 }
 
 .cards:hover {
     background-image: linear-gradient(rgb(135,206,250), rgb(115,226,230));
     cursor: pointer;
+    transform: rotateY(180deg);
 }
 
 .cards span {
     font-size: 3rem;
     margin: auto;
+    opacity: 0%;
+    transition: 1.5s;
 }
 
-
-
-
+.cards span:hover {
+    font-size: 3rem;
+    margin: auto;
+    opacity: 100%;
+}
 
 
 

@@ -78,11 +78,40 @@ const stopperClick = (event) => {
 
 
 
+// Kártyák random rendezése
+
+let spanArray = [];
+const cardsSpan = document.querySelectorAll('.cards span');
+cardsSpan.forEach(item => {
+    spanArray.push(item.textContent);
+});
+
+const randomizer = (arr) => {
+    let i, j, k;
+    for (i = arr.length - 1; i > 0; i -= 1) {
+        j = Math.floor(Math.random() * i);
+        k = arr[i];
+        arr[i] = arr[j];
+        arr[j] = k;
+    }
+    cardsSpan.forEach(item => item.textContent = spanArray);
+};
+
+// 1. Selector -> Nodelist
+// 2. Nodelist elemeinek dataértéke -> Új tömb
+// 3. Tömb elemek keverése
+// 4. Tömb elemek -> Nodelist dataérté
+
+//const cardsItem = () => {
+//    for (let i = 0; i < array.length; i++) {
+//        
+//    }
+//}
+//
+//cardsSpan.forEach(item => item.textContent = spanArray);
 
 
-
-
-
+//let sp = spanArray.forEach(item => item+1);
 
 
 
