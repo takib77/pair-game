@@ -48,13 +48,13 @@ h1, h2, h3{
 }
 */
 .cards span {
+    display: none;
     font-size: 3rem;
     margin: auto;
-    opacity: 0%;
     transition: 1.5s;
 }
 
-.cards span:hover {
+/*.cards span:hover {
     font-size: 3rem;
     margin: auto;
     opacity: 100%;

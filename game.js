@@ -8,9 +8,10 @@
 
 // 1. Kártya esemény
 
-const stopperEventListener = () => {
+const cardsEventListener = () => {
     document.querySelectorAll('.cards').forEach(item => {
-        item.addEventListener('click', handleStopperClick)
+        item.addEventListener('click', handleCardsClick);
+        item.addEventListener('click', handleStopperClick);
     })
 };
 
@@ -118,38 +119,39 @@ const cardsItem = (arr) => {
 
 // 1. Kártyára kattintásra...
 // 2. ...a kártya felfordul és megjelenik a jele
+// 3. A felfordított kártyák vizsgálata
 
 
-// 1. Kártya kattintás esemény
-
-const cardsEventListener = () => {
-    document.querySelectorAll('.cards').forEach(item => {
-        item.addEventListener('click', handleCardsClick)
-    })
-};
+// 1. Kártya kattintás esemény - fent már meg van
 
 
-// 2. A kártya fordítás és a jel megmutatásának indítása
+// 2. A kártya fordítás és a jel megmutatása
 
-const handleCardsClick = (event) => {
+const handleCardsClick = (event) => {  
     event.target.style.transform='rotateY(180deg)';
     event.target.style.backgroundImage='linear-gradient(rgb(135,206,250), rgb(115,226,230))';
-    event.target.style.padding='1px';
-
+    event.target.dataset.value=1;
+    
+    let spanItem = event.target.children;
+    console.log(spanItem);
+    const showSpan = () => {
+        spanItem[0].style.display='block';
+    }
+    setTimeout(showSpan, 500)
 
     cardsEventListener();
-//    showSpan();
 }
 
 
-// 3. A kártya fordítása
+// 3. Párok vizsgálata
 
-//const rotateCard = () => {
-//    document.querySelectorAll('.cards').forEach(item => {
-//        item.style.transform='rotateY(180deg)'
-//    })
+//const pairsOrNot = () => {
+//    for (let i = 0; i < cardsSpan.length; i+=1) {
+//        if (cardsSpan[i].textContent !== cardsSpan[i+1].textContent) {
+//            spanItem[0].style.display='none';
+//        }
+//    }
 //}
-//
 
 
 
@@ -157,9 +159,8 @@ const handleCardsClick = (event) => {
 
 // ---------------------------------------------
 
-stopperEventListener();
-stopperEventStopper();
 cardsEventListener();
+stopperEventStopper();
 
 const endGame = () => {
     removeListener();
