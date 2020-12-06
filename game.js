@@ -6,17 +6,23 @@
 // 4. ...leáll a stopper és nulláz/töröl, amit kell
 
 
-// 1. Kártya esemény
+// 1. Kártya események - MEGHÍVVA
 
 const cardsEventListener = () => {
     document.querySelectorAll('.cards').forEach(item => {
         item.addEventListener('click', handleCardsClick);
+    })
+    pairsOrNot();
+};
+
+const cardsEventListener2 = () => {
+    document.querySelectorAll('.cards').forEach(item => {
         item.addEventListener('click', handleStopperClick);
     })
 };
 
 
-// 1A Stopper beállítása
+// 1A Stopper beállítása - MEGHÍVVA
 
 let stopperTime = 0;
 let stopperRunning = false;
@@ -27,7 +33,6 @@ const timer = () => {
         if (!stopperRunning) {
             return;
         }
-        console.log(stopperRunning);
         stopperTime++;
         const seconds = zeroForTime(stopperTime % 60);
         const minutes = zeroForTime(Math.floor(stopperTime / 60) % 60);
@@ -42,30 +47,36 @@ const zeroForTime = (number) => {
 }
 
 
-// 2. A stopper elindítása
+// 2. A stopper elindítása - MEGHÍVVA
 
 const handleStopperClick = (event) => {
     timer();
-    removeStopperListener();
+    removeCardsEventListener2();
 }
 
-// 2A Kártya kattintós esemény eltávolítása
+// 2A Kártya kattintós események eltávolítása - MEGHÍVVA
 
-const removeStopperListener = () => {
+const removeCardsEventListener = () => {
+    document.querySelectorAll('.cards').forEach(item => {
+        item.removeEventListener('click', handleCardsClick)
+    })
+};
+
+const removeCardsEventListener2 = () => {
     document.querySelectorAll('.cards').forEach(item => {
         item.removeEventListener('click', handleStopperClick)
     })
 };
 
 
-// 3. Próba - elemre kattintási esemény
+// 3. Próba - elemre kattintási esemény - MEGHÍVVA
 
 const stopperEventStopper = () => {
     document.querySelector('.c').addEventListener('click', stopperClick)
 };
 
 
-// 4. Stopper leállítása
+// 4. Stopper leállítása - MEGHÍVVA
 
 const stopperClick = (event) => {
     if (stopperRunning) {
@@ -84,16 +95,17 @@ const stopperClick = (event) => {
 // C. Random elemek beállítása a kártyákra
 
 
-// A. Kártyák kiválasztása és tömbbe tétele
+// A. Kártyák kiválasztása és tömbbe tétele - AUTOMATIKUS
 
 let spanArray = [];
+const cards = document.querySelectorAll('.cards');
 const cardsSpan = document.querySelectorAll('.cards span');
 cardsSpan.forEach(item => {
     spanArray.push(item.textContent);
 });
 
 
-// B. Jelek összekeverése - arr = spanArray
+// B. Jelek összekeverése - arr = spanArray - MEGHÍVVA
 
 const randomizer = (arr) => {
     let i, j, k;
@@ -107,7 +119,7 @@ const randomizer = (arr) => {
 };
 
 
-// C. A megkevert jelek kártyára tétele - arr = spanArray
+// C. A megkevert jelek kártyára tétele - arr = spanArray - MEGHÍVVA
 
 const cardsItem = (arr) => {
     for (let i = 0; i < arr.length; i += 1) {
@@ -125,33 +137,51 @@ const cardsItem = (arr) => {
 // 1. Kártya kattintás esemény - fent már meg van
 
 
-// 2. A kártya fordítás és a jel megmutatása
+// 2. A kártya fordítás és a jel megmutatása - MEGHÍVVA
 
-const handleCardsClick = (event) => {  
-    event.target.style.transform='rotateY(180deg)';
-    event.target.style.backgroundImage='linear-gradient(rgb(135,206,250), rgb(115,226,230))';
-    event.target.dataset.value=1;
-    
+let flipCounter = 0;
+let pairs = 0;
+let lookingForPairs = [];
+const handleCardsClick = (event) => {
+    flipCounter += 1;
+    event.target.style.transform = 'rotateY(180deg)';
+    event.target.style.backgroundImage = 'linear-gradient(rgb(135,206,250), rgb(115,226,230))';
+    event.target.dataset.value = 1;
+
     let spanItem = event.target.children;
-    console.log(spanItem);
     const showSpan = () => {
-        spanItem[0].style.display='block';
+        spanItem[0].style.display = 'block';
+        lookingForPairs.push(spanItem[0].textContent);
     }
     setTimeout(showSpan, 500)
-
     cardsEventListener();
 }
 
 
-// 3. Párok vizsgálata
+// 3. Párok vizsgálata - MEGHÍVVA
 
-//const pairsOrNot = () => {
-//    for (let i = 0; i < cardsSpan.length; i+=1) {
-//        if (cardsSpan[i].textContent !== cardsSpan[i+1].textContent) {
-//            spanItem[0].style.display='none';
-//        }
-//    }
-//}
+const pairsOrNot = () => {
+    if (flipCounter === 2) {
+        for (let i = 0; i < cardsSpan.length; i += 1) {
+            if (lookingForPairs[0] === lookingForPairs[1]) {
+                pairs += 1;
+//                removeCardsEventListener();
+            } else {
+                cardsSpan[i].style.display = 'none';
+                cardsSpan[i+1].style.display = 'none';
+                cards[i].style.transform = '';
+                cards[i+1].style.transform = '';
+                cards[i].style.backgroundImage = 'linear-gradient(rgba(135,206,250,.5), rgba(115,226,230,.5)), url(./backpicture.jpg)';
+                cards[i+1].style.backgroundImage = 'linear-gradient(rgba(135,206,250,.5), rgba(115,226,230,.5)), url(./backpicture.jpg)';
+            }
+        }
+    }
+    flipCounter > 1 ? flipCounter = 0 : flipCounter = flipCounter;
+    lookingForPairs.length > 1 ? lookingForPairs = [] : lookingForPairs = lookingForPairs;
+    console.log('Counter:', flipCounter);
+    console.log('Pairs:', pairs);
+    console.log('Pairs Array:', lookingForPairs);
+};
 
 
 
@@ -159,10 +189,18 @@ const handleCardsClick = (event) => {
 
 // ---------------------------------------------
 
-cardsEventListener();
-stopperEventStopper();
+const startGame = () => {
+    cardsEventListener();
+    cardsEventListener2();
+    stopperEventStopper();
+    randomizer(spanArray);
+    cardsItem(spanArray);
+}
 
 const endGame = () => {
-    removeListener();
+    removeCardsEventListener();
+    removeCardsEventListener2();
+    startGame();
 };
 
+startGame();
